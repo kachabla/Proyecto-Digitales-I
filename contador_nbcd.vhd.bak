@@ -1,0 +1,38 @@
+--Proyecto del componente práctico de sistemas digitales I
+
+--Integrantes: Kenny Chabla Franco
+--             Mauro Vega Jacome
+
+--Librerias
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+--Contador de 4 bits de 0 a 9
+
+entity contador_display is
+	generic(cuenta_final: integer :=9);
+	port(
+		reloj, reset: in std_logic;
+		cuenta: out std_logic_vector(3 downto 0)
+		);
+end contador_display;
+
+
+architecture cuenta_ascendente of contador_display is
+signal Qp, Qn: std_logic_vector(3 downto 0);
+begin
+	process(cuenta_final,Qp)
+	begin
+		if Qp=cuenta_final then
+			Qn <= (others => '0')
+		else
+			Qn <= std_logic_vector(unsigned(Qp)+1)
+		end if;
+		end process;
+	Qp <= (others =>'0') when reset = '1' else Qn when risign_edge(reloj);
+	cuenta <= Qp;
+end cuenta_ascendente;
+			
+	
